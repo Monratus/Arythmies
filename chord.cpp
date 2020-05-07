@@ -161,6 +161,8 @@ void chord::Compress()
 			newMap.push_back(*it % 12);
 		}
 	}
+	chordMap = newMap;
+	UpdateFromChordMap();
 }
 
 /// <summary>

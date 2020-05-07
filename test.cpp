@@ -126,12 +126,13 @@ int main()
 	}
 	*/
 
+	
 	/***** WRITE A CHORD IN A WAV FILE, WITH MODULATION *****/
-		
+	/*
 	utilities u;
 
 	// create the .wav file
-	ofstream stream("SoundFiles/Test2_II-V-I.wav", ios::binary);
+	ofstream stream("SoundFiles/Test4_II-V-IminCompressed.wav", ios::binary);
 	waveFile soundFile(stream);
 
 	// create the chord's notes
@@ -144,11 +145,17 @@ int main()
 	vector<int> maj{ 0, 4, 7, 11, 14 };
 	vector<int> min{ 0, 3, 7, 10, 14 };
 	vector<int> dominante{ 0, 4, 7, 10, 14};
+	vector<int> min6{ 0, 3, 9, 14, 19 };
+	vector<int> min7b5{ 0, 3, 11, 13, 18 };
+	vector<int> alt{ 0, 4, 11, 13, 15 };
 	
-	chord CM7(C, maj);
-	chord Dm7(D, min);
-	chord G7(G, dominante);
-	chord* currentChord;
+	chord Cm6(C, min6);
+	chord Dm7b5(D, min7b5);
+	chord G7alt(G, alt);
+
+	Cm6.Compress();
+	Dm7b5.Compress();
+	G7alt.Compress();
 
 	// This is the time in seconds.
 	float* t(0);
@@ -170,11 +177,11 @@ int main()
 		*t = n / fs;
 		
 		if ( *t < 2 )
-			osc = Dm7.OutputChord(t);
+			osc = Dm7b5.OutputChord(t);
 		else if ( *t < 4 )
-			osc = G7.OutputChord(t);
+			osc = G7alt.OutputChord(t);
 		else
-			osc = CM7.OutputChord(t);
+			osc = Cm6.OutputChord(t);
 
 		mod.Update();
 		out = osc * mod;
@@ -188,5 +195,5 @@ int main()
 
 	delete t;
 	t = 0;
-	
+	*/
 }

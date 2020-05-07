@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chord.h" />
+    <ClInclude Include="emotion.h" />
     <ClInclude Include="note.h" />
     <ClInclude Include="oscillator.h" />
     <ClInclude Include="resource.h" />
