@@ -1,24 +1,23 @@
 #include "note.h"
-#include "utilities.h"
 #include <iostream>
 
 using namespace std;
 
 note::note() : freq(0), midiId(-1), oct(-1) { }
-note::note(utilities const& u) : freq(0), midiId(-1), u(u), oct(-1) { }
+note::note(midi const& u) : freq(0), midiId(-1), u(u), oct(-1) { }
 note::note(float f) : freq(f > 0 ? f : 0)
 {
-	utilities u;
+	midi u;
 	midiId = -1;
 	oct = u.GetOctaveFromFreq(freq);
 }
-note::note(utilities const& u, float f) : u(u)
+note::note(midi const& u, float f) : u(u)
 {	
 	midiId = -1;	
 	freq = f > 0 ? f : 0;	
 	oct = u.GetOctaveFromFreq(freq);
 }
-note::note(utilities const& u, int midi) : midiId(midi), u(u)
+note::note(midi const& u, int midi) : midiId(midi), u(u)
 {	
 	freq = u.GetMIDIFreq(midi);
 	name = u.GetNameFromMIDI(midi);

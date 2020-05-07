@@ -11,7 +11,7 @@
 class oscillator : public sound
 { 
 	public:	
-		virtual enum signal { sine, triangle, ramp, square };
+		enum signal { sine, triangle, ramp, square };
 
 		oscillator(float f, float* time);
 		oscillator(note const& n, float* time);

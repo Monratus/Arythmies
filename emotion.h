@@ -6,7 +6,7 @@ struct emotion
 {
 	unsigned char tonicity;
 	unsigned char destination;
-	unsigned char positivity;
+	unsigned char value;
 };
 
 #endif

@@ -459,6 +459,7 @@ sound min(sound const& a, sound const& b)
 
 #pragma endregion Operators
 
+
 void sound::Update()
 {
 

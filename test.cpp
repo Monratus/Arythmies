@@ -4,6 +4,7 @@
 #include <string>
 #include <regex>
 #include <vector>
+#include "utilities.h"
 #include "oscillator.h"
 #include "waveFile.h"
 #include "chord.h"
@@ -108,10 +109,12 @@ int main()
 	}
 
 	*/
-	/*
-	regex chord_regex{ "([A-G](b|\\#)?)(((m|M)|(sus4|sus2))?)(7?)((b|\\#)?[5913]{0,2})*" };
+
+	/*****REGEX TESTS*****/
+
+	regex chord_regex{ "(((m|M)|(sus4|sus2))?)(7?)((b|\\#)?[5913]{0,2})*" };
 	string chord_entry;
-	cmatch m;
+	smatch m;
 	while (true)
 	{
 		cout << "Type in a chord" << endl;
@@ -124,7 +127,7 @@ int main()
 			
 
 	}
-	*/
+
 
 	
 	/***** WRITE A CHORD IN A WAV FILE, WITH MODULATION *****/

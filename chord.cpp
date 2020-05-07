@@ -8,7 +8,6 @@
 #include "oscillator.h"
 #include "chord.h"
 #include "note.h"
-#include "utilities.h"
 
 using namespace std;
 
@@ -240,7 +239,20 @@ chord& chord::operator+=(note const& b)
 /// </summary>
 void chord::UpdateFromNature() 
 {
+	try
+	{
+		if (!CheckNatureSyntax())
+			throw string("ERROR: Invalid input (chord's nature)");
+		else
+		{
 
+ 
+		}
+	}
+	catch (string const& e)
+	{
+		cerr << e << endl;
+	}
 }
 
 /// <summary>

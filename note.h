@@ -2,17 +2,17 @@
 #define DEF_NOTE
 
 #include <string>
-#include "utilities.h"
+#include "midi.h"
 
-
+class midi;
 class note
 {
 	public:
 		note();		
-		note(utilities const& u);
+		note(midi const& u);
 		note(float f);
-		note(utilities const& u, float f);
-		note(utilities const& u, int midi);
+		note(midi const& u, float f);
+		note(midi const& u, int midi);
 
 		void Tune();
 		bool IsTuned() const;
@@ -58,7 +58,7 @@ class note
 		int midiId;		
 		std::string name;
 		int oct;
-		utilities const u;
+		midi const u;
 		
 };
 

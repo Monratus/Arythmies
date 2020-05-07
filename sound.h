@@ -15,6 +15,7 @@ class sound
 		float GetLevel() const;
 		void SetLevel(float vol);
 
+
 		bool IsEqual(sound const& b) const;
 		bool IsEqual(double const& b) const;
 		bool IsEqual(float const& b) const;
