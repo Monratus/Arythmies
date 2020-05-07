@@ -13,7 +13,6 @@ class oscillator : public sound
 	public:	
 		enum signal { sine, triangle, ramp, square };
 
-		oscillator();
 		oscillator(float f, float* time);
 		oscillator(note const& n, float* time);
 		oscillator(signal shape, float f, float* time);

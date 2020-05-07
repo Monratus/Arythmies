@@ -1,7 +1,6 @@
 #ifndef DEF_UTILITIES
 #define DEF_UTILITIES
 
-
 #include "sound.h"
 #include "oscillator.h"
 #include "chord.h"
@@ -22,7 +21,7 @@ class utilities
 		int GetOctaveFromFreq(double freq) const;
 		int GetOctaveFromFreq(float freq) const;
 
-		void OutputChord(chord const& c, std::vector<oscillator>& osc, float* t);
+		//std::vector<oscillator> OutputChord(chord const& c, float* t);
 
 	private:		
 		void InitMIDI();		

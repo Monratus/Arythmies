@@ -171,11 +171,11 @@ int main()
 		*t = n / fs;
 		
 		if ( *t < 2 )
-			u.OutputChord(Dm7, osc, t);
+			osc = u.OutputChord(Dm7, t);
 		else if ( *t < 4 )
-			u.OutputChord(G7, osc, t);
+			osc = u.OutputChord(G7, t);
 		else
-			u.OutputChord(CM7, osc, t);
+			osc = u.OutputChord(CM7, t);
 
 
 		for (it = osc.begin(); it != osc.end(); ++it)

@@ -374,10 +374,10 @@ sound& sound::operator+=(float const& b)
 }
 sound& sound::operator-=(float const& b)
 {
-	int maxLvl = level > b.level ? level : b.level;
-	int difLvl = level - b.level;
+	int maxLvl = level > b ? level : b;
+	int difLvl = level - b;
 	// We need to re-normalize the sound after the addition.
-	value = (value - b.value) * maxLvl / difLvl;
+	value = (value - b) * maxLvl / difLvl;
 	level = maxLvl;
 	return *this;
 }
@@ -394,7 +394,7 @@ sound& sound::operator/=(float const& b)
 {
 	int maxLvl = level > b ? level : b;
 	int quotientLvl = level / b;
-	if (b.value == 0)
+	if (b == 0)
 		value = maxLvl;
 	else
 		value = (value / b) * (maxLvl / quotientLvl);

@@ -359,9 +359,3 @@ bool note::IsTuned() const
 {
 	return midiId > -1;
 }
-
-note note::null()
-{
-	note nullNote(u);	
-	return nullNote;
-}

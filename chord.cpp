@@ -29,7 +29,7 @@ chord::chord(note r, vector<int> const& map) : root(r), chordMap(map)
 }
 chord::chord(vector<note> const& vals) : notes(vals) 
 { 
-	if (!vals.empty)
+	if (!vals.empty())
 		root = vals[0];
 	UpdateFromNotes();
 }

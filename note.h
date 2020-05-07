@@ -1,6 +1,7 @@
 #ifndef DEF_NOTE
 #define DEF_NOTE
 
+#include <string>
 #include "utilities.h"
 
 
@@ -20,9 +21,6 @@ class note
 		void SetFreq(float f);
 		int GetMIDI() const;
 		void SetMIDI(int m);		
-
-		static note null();
-
 
 		bool IsNull() const;
 		bool IsNull(note const& a) const;
@@ -64,7 +62,6 @@ class note
 		
 };
 
-
 bool operator==(note const& a, note const& b);
 bool operator!=(note const& a, note const& b);
 bool operator>(note const& a, note const& b);
@@ -92,5 +89,7 @@ note max(note const& a, note const& b);
 note min(note const& a, note const& b);
 
 #endif
+
+
 
 

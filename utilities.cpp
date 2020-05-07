@@ -172,12 +172,16 @@ int utilities::GetOctaveFromFreq(float freq) const
 /// <param name="osc">the oscillators vector</param>
 /// <param name="t">time reference</param>
 
-void utilities::OutputChord(chord const& c, vector<oscillator>& osc, float* t)
-{
-	osc.clear();
+/*
+vector<oscillator> utilities::OutputChord(chord const& c, float* t)
+{	
+	vector<oscillator> osc;
 	vector<note>::const_iterator it;
 	for (it = c.GetNotes().begin(); it != c.GetNotes().end(); ++it)
 	{
 		osc.push_back(oscillator((*it), t));
 	}
+
+	return osc;
 }
+*/
