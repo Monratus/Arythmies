@@ -164,24 +164,3 @@ int utilities::GetOctaveFromFreq(float freq) const
 {
 	return (int)(floor(GetMIDIValue(freq) / 12) - 1);
 }
-
-/// <summary>
-/// Outputs a chord in an oscillators vector
-/// </summary>
-/// <param name="c">the chord</param>
-/// <param name="osc">the oscillators vector</param>
-/// <param name="t">time reference</param>
-
-/*
-vector<oscillator> utilities::OutputChord(chord const& c, float* t)
-{	
-	vector<oscillator> osc;
-	vector<note>::const_iterator it;
-	for (it = c.GetNotes().begin(); it != c.GetNotes().end(); ++it)
-	{
-		osc.push_back(oscillator((*it), t));
-	}
-
-	return osc;
-}
-*/

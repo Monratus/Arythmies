@@ -55,8 +55,6 @@ void sound::SetValue(double val)
 		value = -levelMax;
 	else
 		value = val;
-
-	Update();
 }
 
 /// <summary>
@@ -66,8 +64,6 @@ void sound::SetValue(double val)
 void sound::SetLevel(float v)
 {
 	level = v >= 0 ? levelMax : pow(10, v/20) * levelMax;
-
-	Update();
 }
 
 #pragma endregion Setters

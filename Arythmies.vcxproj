@@ -124,7 +124,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chord.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="note.cpp" />
     <ClCompile Include="oscillator.cpp" />
     <ClCompile Include="sound.cpp" />

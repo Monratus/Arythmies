@@ -1,13 +1,14 @@
 #ifndef DEF_UTILITIES
 #define DEF_UTILITIES
 
-#include "sound.h"
-#include "oscillator.h"
-#include "chord.h"
 #include <string>
 #include <map>
 #include <vector>
 
+
+/// <summary>
+/// Contains various methods performing various tasks on the signal
+/// </summary>
 class utilities
 {
 	public:
@@ -20,8 +21,6 @@ class utilities
 		int GetOctaveFromMIDI(int midiVal) const;
 		int GetOctaveFromFreq(double freq) const;
 		int GetOctaveFromFreq(float freq) const;
-
-		//std::vector<oscillator> OutputChord(chord const& c, float* t);
 
 	private:		
 		void InitMIDI();		

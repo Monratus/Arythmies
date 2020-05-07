@@ -58,7 +58,7 @@ class note
 		int midiId;		
 		std::string name;
 		int oct;
-		const utilities u;
+		utilities const u;
 		
 };
 

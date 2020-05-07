@@ -135,9 +135,9 @@ int main()
 	waveFile soundFile(stream);
 
 	// create the chord's notes
-	note C(u, 60);
-	note D(u, 62);
-	note G(u, 67);
+	note C(u, 48);
+	note D(u, 50);
+	note G(u, 55);
 	//note tierce(u, 64);
 	//note quinte(u, 67);
 	//note septieme(u, 71);
@@ -171,11 +171,11 @@ int main()
 		*t = n / fs;
 		
 		if ( *t < 2 )
-			osc = u.OutputChord(Dm7, t);
+			osc = Dm7.OutputChord(t);
 		else if ( *t < 4 )
-			osc = u.OutputChord(G7, t);
+			osc = G7.OutputChord(t);
 		else
-			osc = u.OutputChord(CM7, t);
+			osc = CM7.OutputChord(t);
 
 
 		for (it = osc.begin(); it != osc.end(); ++it)

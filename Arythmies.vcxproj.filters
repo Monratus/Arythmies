@@ -30,9 +30,6 @@
     <ClCompile Include="utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="chord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

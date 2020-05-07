@@ -55,7 +55,6 @@ oscillator::signal oscillator::GetWaveShape() const
 void oscillator::SetRatio(float value)
 {
 	ratio = value;
-	Update();
 }
 
 /// <summary>
@@ -64,8 +63,7 @@ void oscillator::SetRatio(float value)
 /// <param name="f">new frequency (Hz)</param>
 void oscillator::SetFreq(float f)
 {
-	freq = f;
-	Update();
+	freq = f;	
 }
 
 /// <summary>
@@ -75,7 +73,6 @@ void oscillator::SetFreq(float f)
 void oscillator::SetWaveShape(signal shape)
 {
 	waveShape = shape;
-	Update();
 }
 
 #pragma endregion Setters

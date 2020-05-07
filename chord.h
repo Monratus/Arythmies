@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 #include "note.h"
-#include "utilities.h"
 
 
 /// <summary>
@@ -41,7 +40,8 @@ class chord
 		void Transpose(note const& newRoot);
 		void Compress();
 		void Harmonize();
-		
+
+		std::vector<oscillator> OutputChord(float* t);		
 
 		chord Add(chord const& b) const;
 		chord Add(note const& b) const;

@@ -89,6 +89,24 @@ void chord::SetNotes(vector<note> const& newNotes)
 #pragma region Public Methods
 
 /// <summary>
+/// Outputs a chord in an oscillators vector
+/// </summary>
+/// <param name="c">the chord</param>
+/// <param name="osc">the oscillators vector</param>
+/// <param name="t">time reference</param>
+vector<oscillator> chord::OutputChord(float* t)
+{
+	vector<oscillator> osc;
+	vector<note>::const_iterator it;
+	for (it = notes.begin(); it != notes.end(); ++it)
+	{
+		osc.push_back(oscillator((*it), t));
+	}
+
+	return osc;
+}
+
+/// <summary>
 /// Sorts the notes and the chordMap by pitch, setting the root as the lowest note.
 /// </summary>
 void chord::Sort()
@@ -129,7 +147,7 @@ void chord::Compress()
 {
 	vector<int> newMap;
 
-	if (!chordMap.empty)
+	if (!chordMap.empty())
 	{
 		vector<int>::iterator it;
 		for (it = chordMap.begin(); it != chordMap.end(); ++it)
@@ -225,7 +243,7 @@ void chord::UpdateFromChordMap()
 	// Reset the chord's notes
 	notes.clear();
 	
-	if (!chordMap.empty)
+	if (!chordMap.empty())
 	{
 		// Populate notes from chordMap
 		vector<int>::iterator it;
