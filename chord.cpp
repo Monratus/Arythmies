@@ -89,21 +89,27 @@ void chord::SetNotes(vector<note> const& newNotes)
 #pragma region Public Methods
 
 /// <summary>
-/// Outputs a chord in an oscillators vector
+/// Outputs a chord as a sound
 /// </summary>
 /// <param name="c">the chord</param>
 /// <param name="osc">the oscillators vector</param>
 /// <param name="t">time reference</param>
-vector<oscillator> chord::OutputChord(float* t)
+sound chord::OutputChord(float* t, oscillator::signal waveShape, float ratio)
 {
-	vector<oscillator> osc;
+	sound sum(t);
+	oscillator* osc = new oscillator(0, t);
 	vector<note>::const_iterator it;
 	for (it = notes.begin(); it != notes.end(); ++it)
 	{
-		osc.push_back(oscillator((*it), t));
+		*osc = oscillator(waveShape, *it, t, ratio);
+		(*osc).Update();
+		sum += (*osc);
 	}
 
-	return osc;
+	delete osc;
+	osc = 0;
+
+	return sum;
 }
 
 /// <summary>
