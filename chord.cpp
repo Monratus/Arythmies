@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string const chordNatPattern = "((m|M)|(sus4|sus2))?7?((b|\\#)?[913]{0,2})*" ;
+string const chordNatPattern = "(m|(sus4)|(sus2))?(6)?(M?7)?([b|\\#]5)?([b|\\#]?9)?([b|\\#]?11)?(b?13)?" ;
 
 #pragma region Constructors
 
@@ -234,6 +234,26 @@ chord& chord::operator+=(note const& b)
 
 #pragma region Private Methods
 
+chord::natItem chord::ToNatItem(string const& input)
+{
+	if (input == "") return empty;
+	if (input == "m") return m;	
+	if (input == "sus4") return sus4;
+	if (input == "sus2") return sus2;
+	if (input == "6") return M6;
+	if (input == "7") return m7;
+	if (input == "M7") return M7;
+	if (input == "b5") return b5;
+	if (input == "\#5") return d5;
+	if (input == "9") return M9;
+	if (input == "b9") return b9;
+	if (input == "\#9") return d9;
+	if (input == "11") return j11;
+	if (input == "\#11") return d11;	
+	if (input == "13") return M13;
+	if (input == "b13") return m13;	
+}
+
 /// <summary>
 /// Updates the chord's notes and note map using its nature
 /// </summary>
@@ -242,11 +262,91 @@ void chord::UpdateFromNature()
 	try
 	{
 		if (!CheckNatureSyntax())
-			throw string("ERROR: Invalid input (chord's nature)");
+			throw string("ERROR: Invalid input (chord's nature) : " + nature);
 		else
 		{
+			regex chordRegex{ chordNatPattern };
+			smatch match;
+			if (regex_match(nature, match, chordRegex))
+			{
+				chordMap.clear();
+				chordMap.push_back(0); //the chord will always have its root as the base note
+				//We test every group matched and populate the chord map accordingly
+				switch (ToNatItem(match[1])) // tierce
+				{
+					case m:
+						chordMap.push_back(root.GetFreq() > 220 ? 3 : 15);
+						break;
+					case sus2:
+						chordMap.push_back(root.GetFreq() > 220 ? 2 : 14);
+						break;
+					case sus4:
+						chordMap.push_back(root.GetFreq() > 220 ? 5 : 17);
+						break;
+					case empty:
+					default:									
+						chordMap.push_back(root.GetFreq() > 220 ? 4 : 16);
+						break;						
+				}
+				if (ToNatItem(match[4]) == M6) // sixte
+					chordMap.push_back(9);
 
- 
+				switch (ToNatItem(match[5])) // septieme
+				{
+				case m7:
+					chordMap.push_back(10);
+					break;
+				case M7:
+					chordMap.push_back(11);
+					break;
+				}
+				switch (ToNatItem(match[6])) // quinte
+				{
+				case b5:
+					chordMap.push_back(root.GetFreq() > 220 ? 6 : 18);
+					break;
+				case d5:
+					chordMap.push_back(root.GetFreq() > 220 ? 8 : 20);
+					break;
+				}
+				switch (ToNatItem(match[7])) // neuvieme
+				{
+				case b9:
+					chordMap.push_back(13);
+					break;
+				case M9:
+					chordMap.push_back(14);
+					break;
+				case d9:
+					chordMap.push_back(15);
+					break;
+				}
+				switch (ToNatItem(match[8])) // onzieme
+				{				
+				case j11:
+					chordMap.push_back(17);
+					break;
+				case d11:
+					chordMap.push_back(18);
+					break;
+				}
+				switch (ToNatItem(match[9])) // treizieme
+				{
+				case m13:
+					chordMap.push_back(20);
+					break;
+				case M13:
+					chordMap.push_back(21);
+					break;
+				}
+
+				cout << "3 : " << match[1] << endl;
+				cout << "7 : " << match[5] << endl;
+				cout << "9 : " << match[7] << endl;
+				cout << "13 : " << match[9] << endl;
+
+				UpdateFromChordMap();
+			}
 		}
 	}
 	catch (string const& e)

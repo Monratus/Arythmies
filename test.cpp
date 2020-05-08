@@ -111,24 +111,30 @@ int main()
 	*/
 
 	/*****REGEX TESTS*****/
-
-	regex chord_regex{ "(((m|M)|(sus4|sus2))?)(7?)((b|\\#)?[5913]{0,2})*" };
-	string chord_entry;
-	smatch m;
-	while (true)
-	{
-		cout << "Type in a chord" << endl;
-		cin >> chord_entry;		
-			
-		for (auto it=m.begin(); it!=m.end(); it++)
-		{
-			cout << m.str() << endl;
-		}
-			
-
-	}
-
-
+	//regex chord_regex{ "([A-G])([m|M]|(sus4)|(sus2))?(6)?(M?7)?([b|\\#]5)?([b|\\#]?9)?([b|\\#]?11)?([b|\\#]?13)?" };
+	//string chord_entry;
+	//smatch m;
+	//while (true)
+	//{
+	//	cout << "Type in a chord" << endl;
+	//	cin >> chord_entry;		
+	//	
+	//	if (regex_match(chord_entry, m, chord_regex))
+	//	{
+	//		cout << "Bien!" << endl;
+	//		cout << 1 << m[1] << endl;
+	//		cout << 2 << m[2] << endl;
+	//		cout << 3 << m[3] << endl;
+	//		cout << 4 << m[4] << endl;
+	//		cout << 5 << m[5] << endl;
+	//		cout << 6 << m[6] << endl;
+	//		cout << 7 << m[7] << endl;
+	//		cout << 8 << m[8] << endl;
+	//		cout << 9 << m[9] << endl;
+	//		cout << 10 << m[10] << endl;
+	//		cout << 11 << m[11] << endl;
+	//	}
+	//}
 	
 	/***** WRITE A CHORD IN A WAV FILE, WITH MODULATION *****/
 	/*
@@ -199,4 +205,83 @@ int main()
 	delete t;
 	t = 0;
 	*/
+
+	/*****TESTS ON CHORDS (using spain)*****/
+	//midi m;
+	//// create the .wav file
+	//ofstream stream("SoundFiles/TestChords_Spain.wav", ios::binary);
+	//waveFile soundFile(stream);
+	//
+	//// create the chords roots	
+	//note g(m, 55);
+	//note a(m, 57);
+	//note b(m, 59);
+	//note cd(m, 61);
+	//note d(m, 50);
+	//note e(m, 52);
+	//note fd(m, 54);
+	//
+	////note tierce(u, 64);
+	//	
+	//chord GM7(g, "M7"); // 2, 1
+	//chord A7(a, "713"); // 1
+	//chord B7(b, "7#9"); //1
+	//chord B7b9(b, "7b9"); //1
+	//chord Cd7(cd, "7#9"); // 1
+	//chord DM7(d, "M79"); // 1
+	//chord Em7(e, "m79"); // 1
+	//chord Fd7(fd, "7b13"); // 2, 1
+	//
+	//// This is the time in seconds.
+	//float* t(0);
+	//t = new float;
+	//
+	//
+	//sound osc(t); // this is where we combine all the oscillators to print out the sound
+	//oscillator mod(2, t); // this is the modulation frequency
+	//sound out(t); // the final signal
+	//
+	//float fs = soundFile.GetSamplingFrequency();
+	//soundFile.SetTimeLength(24);
+	//int left, right;
+	//
+	//vector<oscillator>::iterator it;
+	//
+	//for (int n = 0; n < soundFile.Size(); n++)
+	//{
+	//	*t = n / fs;
+	//
+	//	if (*t < 4)
+	//		osc = GM7.OutputChord(t);
+	//	else if (*t < 8)
+	//		osc = Fd7.OutputChord(t);
+	//	else if (*t < 10)			
+	//		osc = Em7.OutputChord(t);
+	//	else if (*t < 12)
+	//		osc = A7.OutputChord(t);
+	//	else if (*t < 14)
+	//		osc = DM7.OutputChord(t);
+	//	else if (*t < 16)
+	//		osc = GM7.OutputChord(t);
+	//	else if (*t < 18)
+	//		osc = Cd7.OutputChord(t);
+	//	else if (*t < 20)
+	//		osc = Fd7.OutputChord(t);
+	//	else if (*t < 22)
+	//		osc = B7.OutputChord(t);
+	//	else
+	//		osc = B7b9.OutputChord(t);
+	//
+	//	mod.Update();
+	//	out = osc * mod;
+	//
+	//	left = out.GetValue();
+	//	right = left;
+	//	//cout << left << endl;
+	//	soundFile.Write(left, right);
+	//}
+	//soundFile.Close();
+	//
+	//delete t;
+	//t = 0;
 }

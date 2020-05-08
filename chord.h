@@ -49,15 +49,18 @@ class chord
 		chord& operator+=(chord const& b);
 		chord& operator+=(note const& b);
 
-	private:
+	private:		
+		enum natItem {empty, m, sus2, sus4, M6, m7, M7, b5, d5, b9, M9, d9, j11, d11, m13, M13 };
 		void UpdateFromNature();
 		void UpdateFromChordMap();
 		void UpdateFromNotes();
 		bool CheckNatureSyntax();
+		natItem ToNatItem(std::string const& input);
 		note root;
 		std::vector<int> chordMap;
 		std::vector<note> notes;
 		std::string nature;
+		
 };
 
 chord operator+(chord const& a, chord const& b);
