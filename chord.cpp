@@ -93,7 +93,7 @@ void chord::SetNotes(vector<note> const& newNotes)
 /// <param name="c">the chord</param>
 /// <param name="osc">the oscillators vector</param>
 /// <param name="t">time reference</param>
-sound chord::OutputChord(float* t, oscillator::signal waveShape, float ratio)
+sound chord::ToSound(float* t, oscillator::signal waveShape, float ratio)
 {
 	sound sum(t);
 	oscillator* osc = new oscillator(0, t);
@@ -339,11 +339,10 @@ void chord::UpdateFromNature()
 					chordMap.push_back(21);
 					break;
 				}
-
-				cout << "3 : " << match[1] << endl;
-				cout << "7 : " << match[5] << endl;
-				cout << "9 : " << match[7] << endl;
-				cout << "13 : " << match[9] << endl;
+				//cout << "3 : " << match[1] << endl;
+				//cout << "7 : " << match[5] << endl;
+				//cout << "9 : " << match[7] << endl;
+				//cout << "13 : " << match[9] << endl;
 
 				UpdateFromChordMap();
 			}

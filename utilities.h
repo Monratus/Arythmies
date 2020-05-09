@@ -3,6 +3,7 @@
 
 #include "sound.h"
 #include "chord.h"
+#include "oscillator.h"
 #include "emotion.h"
 
 /// <summary>
@@ -11,7 +12,10 @@
 class utilities
 {
 	public:
-		static sound EmotionToSound(emotion emo, chord baseChord, sound mod);
+		static enum emotionalStates { E1, E2, E3, E4, E5, E6, E7, E8 };
+		static sound EmotionToSound(float* t, emotion emo, chord baseChord, oscillator& mod);
+		static sound EmotionToSound(float* t, emotion emo, note rootNote, oscillator& mod);
+		static emotion EmotionalState(emotionalStates state);		
 };
 
 #endif

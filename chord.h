@@ -42,7 +42,7 @@ class chord
 		void Compress();
 		void Harmonize();
 
-		sound OutputChord(float* t, oscillator::signal waveShape = oscillator::signal::sine, float ratio = 0.5);		
+		sound ToSound(float* t, oscillator::signal waveShape = oscillator::signal::sine, float ratio = 0.5);		
 
 		chord Add(chord const& b) const;
 		chord Add(note const& b) const;

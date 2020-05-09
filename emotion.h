@@ -4,9 +4,11 @@
 
 struct emotion
 {
-	unsigned char tonicity;
-	unsigned char destination;
-	unsigned char value;
+	unsigned char tonicity = 127;
+	unsigned char destination = 127;
+	unsigned char value = 127;
+
+	unsigned char const MAX = 255;
 };
 
 #endif
