@@ -11,7 +11,7 @@
 class oscillator : public sound
 { 
 	public:	
-		enum signal { sine, triangle, ramp, square };
+		enum signal { sine, triangle, ramp, square, pulse };
 
 		oscillator(float f, float* time);
 		oscillator(note const& n, float* time);
@@ -28,13 +28,19 @@ class oscillator : public sound
 
 		void SetWaveShape(signal shape);
 		signal GetWaveShape() const;
-			
+		
+		void SetRandomnessLfo(float r);
+
 		virtual void Update();
 
 	private:
 		signal waveShape;
-		float ratio; // only used for square signals
+		float ratio; // not used for sine signals
 		float freq;	
+		float activeFreq;
+		float randomnessLfo = 0;
+		bool randTriggered = false;
+
 };
 
 #endif

@@ -74,10 +74,6 @@ bool sound::IsEqual(sound const& b) const
 {
 	return (value == b.value);
 }
-bool sound::IsEqual(double const& b) const
-{
-	return (value == b);
-}
 bool sound::IsEqual(float const& b) const
 {
 	return (value == b);
@@ -86,10 +82,6 @@ bool sound::IsGreater(sound const& b) const
 {
 	return (value > b.value);
 }
-bool sound::IsGreater(double const& b) const
-{
-	return (value > b);
-}
 bool sound::IsGreater(float const& b) const
 {
 	return (value > b);
@@ -97,10 +89,6 @@ bool sound::IsGreater(float const& b) const
 bool sound::IsShorter(sound const& b) const
 {
 	return (value < b.value);
-}
-bool sound::IsShorter(double const& b) const
-{
-	return (value < b);
 }
 bool sound::IsShorter(float const& b) const
 {
@@ -114,16 +102,6 @@ sound sound::Add(sound const& b) const
 	int sumLvl = level + b.level;
 	// We need to re-normalize the sound after the addition.
 	addition.value = (value + b.value)*maxLvl/sumLvl;
-	addition.level = maxLvl;
-	return addition;
-}
-sound sound::Add(double const& b) const
-{
-	sound addition(t);
-	int maxLvl = level > b ? level : b;
-	int sumLvl = level + b;
-	// We need to re-normalize the sound after the addition.
-	addition.value = (value + b) * maxLvl / sumLvl;
 	addition.level = maxLvl;
 	return addition;
 }
@@ -147,16 +125,6 @@ sound sound::Subtract(sound const& b) const
 	subtraction.level = maxLvl;
 	return subtraction;
 }
-sound sound::Subtract(double const& b) const
-{
-	sound subtraction(t);
-	int maxLvl = level > b ? level : b;
-	int subLvl = level - b;
-	// We need to re-normalize the sound after the addition.
-	subtraction.value = (value - b) * maxLvl / subLvl;
-	subtraction.level = maxLvl;
-	return subtraction;
-}
 sound sound::Subtract(float const& b) const
 {
 	sound subtraction(t);
@@ -174,17 +142,6 @@ sound sound::Multiply(sound const& b) const
 	int maxLvl = level > b.level ? level : b.level;
 	int productLvl = level * b.level;
 	multiplication.value = value * b.value * maxLvl/productLvl;
-	multiplication.level = maxLvl;
-
-	return multiplication;
-}
-sound sound::Multiply(double const& b) const
-{
-	sound multiplication(t);
-
-	int maxLvl = level > b ? level : b;
-	int productLvl = level * b;
-	multiplication.value = value * b * maxLvl / productLvl;
 	multiplication.level = maxLvl;
 
 	return multiplication;
@@ -214,20 +171,6 @@ sound sound::Divide(sound const& b) const
 
 	return division;
 }
-sound sound::Divide(double const& b) const
-{
-	sound division(t);
-
-	int maxLvl = level > b ? level : b;
-	int quotientLvl = level / b;
-	if (b == 0)
-		division.value = maxLvl;
-	else
-		division.value = (value / b) * (maxLvl / quotientLvl);
-	division.level = maxLvl;
-
-	return division;
-}
 sound sound::Divide(float const& b) const
 {
 	sound division(t);
@@ -251,10 +194,6 @@ bool operator==(sound const& a, sound const& b)
 {
 	return a.IsEqual(b);
 }
-bool operator==(sound const& a, double const& b)
-{
-	return a.IsEqual(b);
-}
 bool operator==(sound const& a, float const& b)
 {
 	return a.IsEqual(b);
@@ -263,19 +202,11 @@ bool operator!=(sound const& a, sound const& b)
 {
 	return !a.IsEqual(b);
 }
-bool operator!=(sound const& a, double const& b)
-{
-	return !(a==b);
-}
 bool operator!=(sound const& a, float const& b)
 {
 	return !(a==b);
 }
 bool operator>(sound const& a, sound const& b)
-{
-	return a.IsGreater(b);
-}
-bool operator>(sound const& a, double const& b)
 {
 	return a.IsGreater(b);
 }
@@ -287,10 +218,6 @@ bool operator<(sound const& a, sound const& b)
 {
 	return a.IsShorter(b);
 }
-bool operator<(sound const& a, double const& b)
-{
-	return a.IsShorter(b);
-}
 bool operator<(sound const& a, float const& b)
 {
 	return a.IsShorter(b);
@@ -299,19 +226,11 @@ bool operator>=(sound const& a, sound const& b)
 {
 	return (a > b || a==b);
 }
-bool operator>=(sound const& a, double const& b)
-{
-	return (a > b || a == b);
-}
 bool operator>=(sound const& a, float const& b)
 {
 	return (a > b || a == b);
 }
 bool operator<=(sound const& a, sound const& b)
-{
-	return (a < b || a == b);
-}
-bool operator<=(sound const& a, double const& b)
 {
 	return (a < b || a == b);
 }
@@ -403,19 +322,11 @@ sound operator+(sound const& a, sound const& b)
 {
 	return a.Add(b);
 }
-sound operator+(sound const& a, double const& b)
-{
-	return a.Add(b);
-}
 sound operator+(sound const& a, float const& b)
 {
 	return a.Add(b);
 }
 sound operator-(sound const& a, sound const& b)
-{
-	return a.Subtract(b);
-}
-sound operator-(sound const& a, double const& b)
 {
 	return a.Subtract(b);
 }
@@ -427,19 +338,11 @@ sound operator*(sound const& a, sound const& b)
 {
 	return a.Multiply(b);
 }
-sound operator*(sound const& a, double const& b)
-{
-	return a.Multiply(b);
-}
 sound operator*(sound const& a, float const& b)
 {
 	return a.Multiply(b);
 }
 sound operator/(sound const& a, sound const& b)
-{
-	return a.Divide(b);
-}
-sound operator/(sound const& a, double const& b)
 {
 	return a.Divide(b);
 }

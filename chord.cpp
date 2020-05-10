@@ -96,17 +96,14 @@ void chord::SetNotes(vector<note> const& newNotes)
 sound chord::ToSound(float* t, oscillator::signal waveShape, float ratio)
 {
 	sound sum(t);
-	oscillator* osc = new oscillator(0, t);
+	oscillator osc(0, t);
 	vector<note>::const_iterator it;
 	for (it = notes.begin(); it != notes.end(); ++it)
 	{
-		*osc = oscillator(waveShape, *it, t, ratio);
-		(*osc).Update();
-		sum += (*osc);
+		osc = oscillator(waveShape, *it, t, ratio);
+		osc.Update();
+		sum += osc;
 	}
-
-	delete osc;
-	osc = 0;
 
 	return sum;
 }

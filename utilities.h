@@ -16,6 +16,9 @@ class utilities
 		static sound EmotionToSound(float* t, emotion emo, chord baseChord, oscillator& mod);
 		static sound EmotionToSound(float* t, emotion emo, note rootNote, oscillator& mod);
 		static emotion EmotionalState(emotionalStates state);		
+		static chord EmotionToChord(emotion emo, note rootNote);
+		static oscillator::signal EmotionToWaveShape(emotion emo);
+		static oscillator EmotionToPulse(float *t, emotion emo);
 };
 
 #endif

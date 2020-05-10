@@ -6,69 +6,15 @@ using namespace std;
 
 
 /// <summary>
-/// <para>! DOES NOT COMBINE MODULATION !</para>
-/// <para>Drives a sound with an emotion.</para>
-/// <para>tonicity drives the modulation's frequency and the chord's compression </para>
-/// <para>direction drives the wave shape</para>
-/// <para>value drives the chord's nature and randomizes the modulation's frequency</para>
+/// <para>Creates a chord based on an emotion</para>
+/// <para>value : changes the actual nature of the chord (major/minor)</para>
+/// <para>tonicity : adds extensions to the chord</para>
 /// </summary>
 /// <param name="emo">the driving emotion</param>
-/// <param name="baseChord">the chord, which is the set of notes we are hearing</param>
-/// <param name="mod">The modulating sound</param>
-/// <returns>the combined sound</returns>
-sound utilities::EmotionToSound(float* t, emotion emo, chord baseChord, oscillator& mod)
-{
-	sound out;	
-	float randomness;
-	string nat;
-
-	float ego = (float)emo.destination / 255;
-	float value = (float)emo.value / 255;
-	float tonicity = (float)emo.tonicity / 255;
-	
-	// direction
-	oscillator::signal waveShape;
-	if (ego < 0.5) waveShape = oscillator::signal::sine;
-	else if (ego < 0.75) waveShape = oscillator::signal::triangle;
-	else waveShape = oscillator::signal::ramp;
-
-	// value
-	randomness = 1 - value;
-	if (value > 0.6) nat = "";
-	else if (value > 0.5) nat = "sus4";
-	else if (value > 0.4) nat = "sus2";
-	else nat = "m";
-
-	randomness = (1 - value)*((rand() % 100 - 50)/100);
-
-	// tonicity
-	if (tonicity > 0.4)	nat += value > 0.6 ? "M7" : "7";
-	if (tonicity > 0.5)	nat += (value > 0.35) ? "9" : "b9" ;	
-	if (tonicity > 0.7)	nat += "11";
-	if (tonicity > 0.8)	nat += "b13";
-	if (tonicity > 0.9)	baseChord.Compress();
-
-	// Combine
-	mod.SetFreq(1 + randomness + 1.5 * tonicity);
-
-	return baseChord.ToSound(t, waveShape);
-}
-
-/// <summary>
-/// <para>! DOES NOT COMBINE MODULATION !</para>
-/// <para>Drives a sound with an emotion.</para>
-/// <para>tonicity drives the modulation's frequency and the chord's compression </para>
-/// <para>direction drives the wave shape</para>
-/// <para>value drives the chord's nature and randomizes the modulation's frequency</para>
-/// </summary>
-/// <param name="emo">the driving emotion</param>
-/// <param name="rootNote">the root note the output chord is based upon</param>
-/// <param name="mod">The modulating sound</param>
-/// <returns>the combined sound</returns>
-sound utilities::EmotionToSound(float* t, emotion emo, note rootNote, oscillator& mod)
-{
-	sound out;
-	float randomness;
+/// <param name="rootNote">the root note of the output chord</param>
+/// <returns>a chord</returns>
+chord utilities::EmotionToChord(emotion emo, note rootNote)
+{	
 	string nat;
 	chord baseChord(rootNote);
 
@@ -76,12 +22,6 @@ sound utilities::EmotionToSound(float* t, emotion emo, note rootNote, oscillator
 	float value = (float)emo.value / 255;
 	float tonicity = (float)emo.tonicity / 255;
 
-	// direction
-	oscillator::signal waveShape;
-	if (ego < 0.5) waveShape = oscillator::signal::sine;
-	else if (ego < 0.75) waveShape = oscillator::signal::triangle;
-	else waveShape = oscillator::signal::ramp;
-
 	// value
 	if (value > 0.6) nat = "";
 	else if (value > 0.5) nat = "sus4";
@@ -90,17 +30,57 @@ sound utilities::EmotionToSound(float* t, emotion emo, note rootNote, oscillator
 
 
 	// tonicity
-	if (tonicity > 0.4)	nat += value > 0.6 ? "M7" : "7";
+	if (tonicity > 0.4)
+	{
+		if (value > 0.6)	nat += "M7";
+		else if (value > 0.3)	nat += "7";
+		else nat += "6";
+	}
 	if (tonicity > 0.5)	nat += (value > 0.35) ? "9" : "b9";
-	if (tonicity > 0.7)	nat += "11";
+	if (tonicity > 0.7)	nat += (value > 0.35) ? "11" : "#11";
 	if (tonicity > 0.8)	nat += "b13";
 	baseChord.SetNature(nat);
-	if (tonicity > 0.9)	baseChord.Compress();
-
-
-	return baseChord.ToSound(t, waveShape);
+	if (tonicity > 0.9 && value < 0.2)	baseChord.Compress();
+	
+	return baseChord;
 }
 
+/// <summary>
+/// drives an oscillator's signal shape with an emotion
+/// </summary>
+/// <param name="emo">the driving emotion</param>
+/// <returns>an oscillator signal</returns>
+oscillator::signal utilities::EmotionToWaveShape(emotion emo)
+{
+	float ego = (float)emo.destination / 255;
+
+	// direction
+	oscillator::signal waveShape;
+	if (ego < 0.5) waveShape = oscillator::signal::sine;
+	else if (ego < 0.75) waveShape = oscillator::signal::triangle;
+	else waveShape = oscillator::signal::ramp;
+
+	return waveShape;
+}
+
+/// <summary>
+/// <para>Drives a pulse signal with an emotion</para>
+/// <para>Tonicity drives the speed</para>
+/// <para>Value drives the randomness</para>
+/// </summary>
+/// <param name="t">time pointer to dive the oscillator</param>
+/// <param name="emo">the emotion</param>
+/// <returns>a pulse oscillator</returns>
+oscillator utilities::EmotionToPulse(float* t, emotion emo)
+{
+	float value = (float)emo.value / 255;
+	float tonicity = (float)emo.tonicity / 255;
+
+	oscillator pulse(oscillator::signal::pulse, 1 + 1.5 * tonicity, t);
+	pulse.SetRandomnessLfo(1 - value);
+
+	return pulse;
+}
 
 emotion utilities::EmotionalState(utilities::emotionalStates state)
 {

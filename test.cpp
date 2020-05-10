@@ -288,14 +288,14 @@ int main()
 	/*****OUTPUTS BASIC EMOTIONS*****/
 	midi m;
 	// create the .wav file
-	ofstream stream("SoundFiles/TestE1.wav", ios::binary);
+	ofstream stream("SoundFiles/TestE3.wav", ios::binary);
 
 	waveFile soundFile(stream);
 
 	
 	// create the chords roots	
-	note C(m, 60);
-	
+	note G(m, 57);
+	chord chordE3 = utilities::EmotionToChord(utilities::EmotionalState(utilities::E3), G);
 	
 	// This is the time in seconds.
 	float* t(0);
@@ -303,25 +303,24 @@ int main()
 	
 	
 	sound osc(t); // this is where we combine all the oscillators to print out the sound
-	oscillator mod(1, t); // this is the modulation frequency
+	//oscillator mod(2, t); // this is the modulation frequency
 	sound out(t); // the final signal
 	
 	float fs = soundFile.GetSamplingFrequency();
-	soundFile.SetTimeLength(2);
+	soundFile.SetTimeLength(5);
 	int left, right;
 	
 	for (int n = 0; n < soundFile.Size(); n++)
 	{
 		*t = n / fs;
-		osc = utilities::EmotionToSound(t, utilities::EmotionalState(utilities::E1), C, mod);
-		mod.Update();
-		out = osc * mod ;
+		osc = chordE3.ToSound(t);
+		//mod.Update();
+		out = osc;
 	
 		left = out.GetValue();
 		right = left;		
 		//cout << left << endl;
 		soundFile.Write(left, right);
-		cout << *t * 100 / 2 << endl;
 	}
 	soundFile.Close();
 	
