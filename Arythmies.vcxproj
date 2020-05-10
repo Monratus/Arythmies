@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chord.cpp" />
+    <ClCompile Include="envelope.cpp" />
     <ClCompile Include="note.cpp" />
     <ClCompile Include="oscillator.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="chord.h" />
     <ClInclude Include="emotion.h" />
+    <ClInclude Include="envelope.h" />
     <ClInclude Include="note.h" />
     <ClInclude Include="oscillator.h" />
     <ClInclude Include="resource.h" />
