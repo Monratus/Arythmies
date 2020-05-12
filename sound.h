@@ -1,6 +1,7 @@
 #ifndef DEF_SOUND
 #define DEF_SOUND
 
+#include "envelope.h"
 
 class sound
 {		
@@ -28,6 +29,7 @@ class sound
 		sound Subtract(float const& b) const;
 		sound Multiply(sound const& b) const;
 		sound Multiply(float const& b) const;
+		sound Multiply(envelope& b) const;
 		sound Divide(sound const& b) const;
 		sound Divide(float const& b) const;
 		sound& operator+=(sound const& b);
@@ -41,6 +43,7 @@ class sound
 			
 		virtual void Update();
 		
+	protected:
 		int level;
 		float* t; // time in s
 		double value;
@@ -65,6 +68,7 @@ sound operator-(sound const& a, sound const& b);
 sound operator-(sound const& a, float const& b); 
 sound operator*(sound const& a, sound const& b);
 sound operator*(sound const& a, float const& b); 
+sound operator*(sound const& a, envelope& e);
 sound operator/(sound const& a, sound const& b);
 sound operator/(sound const& a, float const& b);
 

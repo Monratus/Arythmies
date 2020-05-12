@@ -157,6 +157,16 @@ sound sound::Multiply(float const& b) const
 
 	return multiplication;
 }
+sound sound::Multiply(envelope& b) const
+{
+	sound multiplication(t);
+	
+	int productLvl = level * b.GetLevel();
+	multiplication.value = value * b.GetLevel();
+	multiplication.level = productLvl;
+
+	return multiplication;
+}
 sound sound::Divide(sound const& b) const
 {
 	sound division(t);
@@ -341,6 +351,10 @@ sound operator*(sound const& a, sound const& b)
 sound operator*(sound const& a, float const& b)
 {
 	return a.Multiply(b);
+}
+sound operator*(sound const& a, envelope& e)
+{
+	return a.Multiply(e);
 }
 sound operator/(sound const& a, sound const& b)
 {

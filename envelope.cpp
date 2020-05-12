@@ -1,4 +1,6 @@
 #include "envelope.h"
+#include <iostream>
+using namespace std;
 
 #pragma region Constructors
 
@@ -13,8 +15,6 @@ envelope::envelope(float* time, float attack, float decay, float sustain, float 
 
 	level = 0;
 	gate = 0;
-	gateUp = false;
-	gateDown = false;
 	gateUpTime = 0;
 	gateDownTime = 0;
 	currentStage = None;
@@ -72,20 +72,17 @@ void envelope::SetRelease(float r)
 }
 void envelope::SetGate(float g)
 {
-	if (g > 0 && !gateUp)
+	if (g > 0.1 && gate <= 0.2)
 	{
-		gateUp = true;
 		gateUpTime = *t;
-		gateUp = false;
+		//cout << "Up :" << gateUpTime << endl;
 	}
-	else if (g <= 0 && !gateDown)
+	else if (g <= 0.1 && gate > 0.2)
 	{
-		gateDown = true;
 		gateDownTime = *t;
-		gateDown = false;
+		//cout << "Down :" << gateDownTime << endl;;
 	}
 	gate = g;
-	Update();
 }
 
 #pragma endregion Setters
@@ -118,6 +115,7 @@ void envelope::Update()
 	switch (currentStage)
 	{
 	case None:
+		level = 0;
 		break;
 
 	case Sustain:
@@ -133,7 +131,7 @@ void envelope::Update()
 		break;
 
 	case Decay:
-		level = gate * (1 - (1 - _sustain) / _decay) * (*t - (gateUpTime + _attack));
+		level = gate * (1 - ((1 - _sustain) / _decay) * (*t - (gateUpTime + _attack)));
 		break;
 	}
 }
@@ -146,7 +144,7 @@ void envelope::UpdateStage()
 		else if (*t - gateUpTime < _attack + _decay) currentStage = Decay;
 		else currentStage = Sustain;
 	}
-	else if (gate <= 0 && *t - gateDownTime < _release) currentStage = Release;
+	else if (gate <= 0 && *t - gateDownTime < _release && *t > _release) currentStage = Release;
 	else currentStage = None;
 }
 

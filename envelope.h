@@ -37,8 +37,6 @@ class envelope
 	private:		
 		stage currentStage;
 		float gate;
-		bool gateUp;
-		bool gateDown;
 		float gateUpTime; // time key of the last time trigger was set to true
 		float gateDownTime; // time key of the last time gate went back to 0
 		float _attack; // time taken to get from 0 to 1
