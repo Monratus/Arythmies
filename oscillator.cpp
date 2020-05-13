@@ -109,13 +109,8 @@ void oscillator::Update()
 	// - check if the value is negative (or null for the case of the pulse signal) 
 	// - if this is true, that means that we are in the second part of the period since the signal is centered on 0;
 	// - check the new value : if it's positive, then a period has passed and the randomization is triggered!
-	//bool periodEnd = waveShape != signal::pulse ? value < 0 : value == 0;
+	high = value > 0;
 
-	/*if (randTriggered && randomnessLfo > 0)
-	{
-		activeFreq = freq + randomnessLfo * ((rand() % 200) - 100) / 10;
-		randTriggered = false;
-	}*/
 	switch (waveShape)
 	{
 	case sine:
@@ -142,7 +137,11 @@ void oscillator::Update()
 		SetValue(fmod(*t, 1 / activeFreq) < ratio / activeFreq ? 0 : 1);
 		break;
 	}
-
-	//bool periodStart = waveShape != signal::pulse ? value >= 0 : value == 1;
-	//randTriggered = periodEnd && periodStart;
+	
+	
+	if (!high && value > 0 && randomnessLfo > 0)
+	{
+		activeFreq = freq + randomnessLfo * ((rand() % 200) - 100) / 100;
+		//cout << activeFreq << endl;
+	}
 }

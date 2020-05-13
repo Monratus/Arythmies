@@ -34,7 +34,7 @@ chord utilities::EmotionToChord(emotion emo, note rootNote)
 	{
 		if (value > 0.6)	nat += "M7";
 		else if (value > 0.3)	nat += "7";
-		else nat += "6";
+		else nat += "6M7";
 	}
 	if (tonicity > 0.5)	nat += (value > 0.35) ? "9" : "b9";
 	if (tonicity > 0.7)	nat += (value > 0.35) ? "11" : "#11";
@@ -68,18 +68,34 @@ oscillator::signal utilities::EmotionToWaveShape(emotion emo)
 /// <para>Tonicity drives the speed</para>
 /// <para>Value drives the randomness</para>
 /// </summary>
-/// <param name="t">time pointer to dive the oscillator</param>
+/// <param name="t">time pointer to drive the oscillator</param>
 /// <param name="emo">the emotion</param>
 /// <returns>a pulse oscillator</returns>
-oscillator utilities::EmotionToPulse(float* t, emotion emo)
+oscillator utilities::EmotionToPulse(float* t, emotion emo, float lowFreq)
 {
 	float value = (float)emo.value / 255;
 	float tonicity = (float)emo.tonicity / 255;
 
-	oscillator pulse(oscillator::signal::pulse, 1 + 1.5 * tonicity, t);
+	oscillator pulse(oscillator::signal::pulse, lowFreq + 1.5 * tonicity, t);
 	pulse.SetRandomnessLfo(1 - value);
 
 	return pulse;
+}
+
+/// <summary>
+/// <para>Drives a modulation signal with an emotion</para>
+/// <para>Tonicity drives the speed</para>
+/// </summary>
+/// <param name="t">time pointer to drive the oscillator</param>
+/// <param name="emo">the emotion</param>
+/// <returns>a sine oscillator</returns>
+oscillator utilities::EmotionToModulation(float* t, emotion emo, float lowFreq)
+{
+	float tonicity = (float)emo.tonicity / 255;
+
+	oscillator mod(oscillator::signal::sine, lowFreq + 3.5 * tonicity, t);
+
+	return mod;
 }
 
 emotion utilities::EmotionalState(utilities::emotionalStates state)

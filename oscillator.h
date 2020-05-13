@@ -39,7 +39,7 @@ class oscillator : public sound
 		float freq;	
 		float activeFreq;
 		float randomnessLfo = 0;
-		bool randTriggered = false;
+		bool high; // high state of the signal
 
 };
 

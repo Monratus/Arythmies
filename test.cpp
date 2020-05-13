@@ -286,87 +286,96 @@ int main()
 	//t = 0;
 
 	/*****TEST ON ENVELOPES*****/
-	midi m;
-	// create the .wav file
-	ofstream stream("SoundFiles/TestBeat.wav", ios::binary);
-
-	waveFile soundFile(stream);
-
-	// create the chords roots	
-	note C(m, 36);	
-
-	// This is the time in seconds.
-	float* t(0);
-	t = new float;
-
-
-	oscillator osc(oscillator::signal::triangle, C, t);
-	oscillator gate(oscillator::signal::pulse, 1.5, t);
-	envelope beat(t, 0.01f, 0.02f, 0.001f, 0.01f);
-	sound out(t); // the final signal
-
-	float fs = soundFile.GetSamplingFrequency();
-	soundFile.SetTimeLength(5);
-	int left, right;
-
-	for (int n = 0; n < soundFile.Size(); n++)
-	{
-		*t = n / fs;
-		osc.Update();
-		gate.Update();
-		beat.SetGate(gate.GetValue());
-		
-		out = osc * beat;
-
-		left = out.GetValue();
-		right = left;
-		//cout << left << endl;
-		soundFile.Write(left, right);
-	}
-	soundFile.Close();
-
-	delete t;
-	t = 0;
-
-	/*****OUTPUTS BASIC EMOTIONS*****/
 	//midi m;
 	//// create the .wav file
-	//ofstream stream("SoundFiles/TestE3.wav", ios::binary);
+	//ofstream stream("SoundFiles/TestBeat.wav", ios::binary);
 
 	//waveFile soundFile(stream);
 
-	//
 	//// create the chords roots	
-	//note G(m, 57);
-	//chord chordE3 = utilities::EmotionToChord(utilities::EmotionalState(utilities::E3), G);
-	//
+	//note C(m, 36);	
+
 	//// This is the time in seconds.
 	//float* t(0);
 	//t = new float;
-	//
-	//
-	//sound osc(t); // this is where we combine all the oscillators to print out the sound
-	////oscillator mod(2, t); // this is the modulation frequency
+
+
+	//oscillator osc(oscillator::signal::triangle, C, t);
+	//oscillator gate(oscillator::signal::pulse, 1.5, t);
+	//envelope beat(t, 0.01f, 0.02f, 0.001f, 0.01f);
 	//sound out(t); // the final signal
-	//
+
 	//float fs = soundFile.GetSamplingFrequency();
 	//soundFile.SetTimeLength(5);
 	//int left, right;
-	//
+
 	//for (int n = 0; n < soundFile.Size(); n++)
 	//{
 	//	*t = n / fs;
-	//	osc = chordE3.ToSound(t);
-	//	//mod.Update();
-	//	out = osc;
-	//
+	//	osc.Update();
+	//	gate.Update();
+	//	beat.SetGate(gate.GetValue());
+	//	
+	//	out = osc * beat;
+
 	//	left = out.GetValue();
-	//	right = left;		
+	//	right = left;
 	//	//cout << left << endl;
 	//	soundFile.Write(left, right);
 	//}
 	//soundFile.Close();
-	//
+
 	//delete t;
 	//t = 0;
+
+	/*****OUTPUTS BASIC EMOTIONS*****/
+	midi m;
+	// create the .wav file
+	ofstream stream("SoundFiles/Test.wav", ios::binary);
+
+	waveFile soundFile(stream);
+
+	
+	// create the chords roots	
+	note G(m, 57);
+	note GLow(m, 45);
+	emotion emo = utilities::EmotionalState(utilities::E2);
+	chord chordEmo = utilities::EmotionToChord(emo, G);
+	
+	// This is the time in seconds.
+	float* t(0);
+	t = new float;
+	
+	oscillator gate = utilities::EmotionToPulse(t, emo, 1);
+	oscillator mod = utilities::EmotionToModulation(t, emo, 1);
+	oscillator::signal waveShape = utilities::EmotionToWaveShape(emo);
+	envelope beatEnvelope(t, 0.01f, 0.02f, 0.005f, 0.02f);
+	oscillator beatOsc(oscillator::signal::sine, GLow, t);
+	sound osc(t);
+	
+	sound out(t); // the final signal
+	
+	float fs = soundFile.GetSamplingFrequency();
+	soundFile.SetTimeLength(30);
+	int left, right;
+	
+	for (int n = 0; n < soundFile.Size(); n++)
+	{
+		*t = n / fs;
+		osc = chordEmo.ToSound(t, waveShape);
+		gate.Update();
+		beatOsc.Update();
+		beatEnvelope.SetGate(gate.GetValue());
+		mod.Update();
+		out = osc * mod + beatOsc * beatEnvelope;
+	
+		left = out.GetValue();
+		right = left;		
+		//cout << left << endl;
+		soundFile.Write(left, right);
+	}
+	soundFile.Close();
+	
+	delete t;
+	t = 0;
 }

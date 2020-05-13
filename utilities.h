@@ -18,7 +18,8 @@ class utilities
 		static emotion EmotionalState(emotionalStates state);		
 		static chord EmotionToChord(emotion emo, note rootNote);
 		static oscillator::signal EmotionToWaveShape(emotion emo);
-		static oscillator EmotionToPulse(float *t, emotion emo);
+		static oscillator EmotionToPulse(float *t, emotion emo, float lowFreq = 1);
+		static oscillator EmotionToModulation(float* t, emotion emo, float lowFreq = 0.5);
 };
 
 #endif
